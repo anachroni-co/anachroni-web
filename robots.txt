@@ -1,0 +1,20 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://anachroni.co/sitemap.xml
+
+# Disallow admin and api paths (if any in the future)
+Disallow: /api/
+Disallow: /_next/
+
+# Allow all crawlers to access assets
+User-agent: *
+Allow: /assets/
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.webp$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.svg$

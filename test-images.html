@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Imágenes - CapibaraGPT</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #111;
+            color: white;
+            padding: 20px;
+        }
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .image-item {
+            border: 1px solid #333;
+            padding: 15px;
+            border-radius: 8px;
+            background: #222;
+        }
+        .image-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            border: 1px solid #555;
+            border-radius: 4px;
+        }
+        .success { border-color: green; }
+        .error { border-color: red; }
+        .status {
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .success-status { color: green; }
+        .error-status { color: red; }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔍 Test de Imágenes - CapibaraGPT</h1>
+        <p>Verificando que las imágenes estén accesibles desde <code>/images/</code></p>
+        
+        <div class="image-grid">
+            <div class="image-item" id="item-1">
+                <h3>Capibara 1B</h3>
+                <img src="/images/Capibara1Bb.webp" alt="Capibara 1B" 
+                     onload="markSuccess(this, '1')" 
+                     onerror="markError(this, '1')">
+                <div class="status" id="status-1">Cargando...</div>
+                <code>/images/Capibara1Bb.webp</code>
+            </div>
+            
+            <div class="image-item" id="item-2">
+                <h3>Capibara 3B</h3>
+                <img src="/images/Capibara3Bn.webp" alt="Capibara 3B"
+                     onload="markSuccess(this, '2')" 
+                     onerror="markError(this, '2')">
+                <div class="status" id="status-2">Cargando...</div>
+                <code>/images/Capibara3Bn.webp</code>
+            </div>
+            
+            <div class="image-item" id="item-3">
+                <h3>Capibara 9B</h3>
+                <img src="/images/Capibara9Bn.webp" alt="Capibara 9B"
+                     onload="markSuccess(this, '3')" 
+                     onerror="markError(this, '3')">
+                <div class="status" id="status-3">Cargando...</div>
+                <code>/images/Capibara9Bn.webp</code>
+            </div>
+            
+            <div class="image-item" id="item-4">
+                <h3>Multimodal</h3>
+                <img src="/images/multimodal1.webp" alt="Multimodal"
+                     onload="markSuccess(this, '4')" 
+                     onerror="markError(this, '4')">
+                <div class="status" id="status-4">Cargando...</div>
+                <code>/images/multimodal1.webp</code>
+            </div>
+            
+            <div class="image-item" id="item-5">
+                <h3>Safe</h3>
+                <img src="/images/Safe1.webp" alt="Safe"
+                     onload="markSuccess(this, '5')" 
+                     onerror="markError(this, '5')">
+                <div class="status" id="status-5">Cargando...</div>
+                <code>/images/Safe1.webp</code>
+            </div>
+            
+            <div class="image-item" id="item-6">
+                <h3>Embedded</h3>
+                <img src="/images/Embeded1.webp" alt="Embedded"
+                     onload="markSuccess(this, '6')" 
+                     onerror="markError(this, '6')">
+                <div class="status" id="status-6">Cargando...</div>
+                <code>/images/Embeded1.webp</code>
+            </div>
+        </div>
+        
+        <div style="margin-top: 30px; padding: 20px; background: #333; border-radius: 8px;">
+            <h3>📊 Resultados del Test</h3>
+            <div id="results">Ejecutando tests...</div>
+        </div>
+    </div>
+
+    <script>
+        let successCount = 0;
+        let errorCount = 0;
+        let totalImages = 6;
+
+        function markSuccess(img, id) {
+            const item = document.getElementById(`item-${id}`);
+            const status = document.getElementById(`status-${id}`);
+            item.classList.add('success');
+            status.textContent = '✅ SUCCESS';
+            status.classList.add('success-status');
+            successCount++;
+            updateResults();
+            console.log(`✅ Imagen cargada correctamente: ${img.src}`);
+        }
+
+        function markError(img, id) {
+            const item = document.getElementById(`item-${id}`);
+            const status = document.getElementById(`status-${id}`);
+            item.classList.add('error');
+            status.textContent = '❌ ERROR';
+            status.classList.add('error-status');
+            errorCount++;
+            updateResults();
+            console.error(`❌ Error cargando imagen: ${img.src}`);
+        }
+
+        function updateResults() {
+            const results = document.getElementById('results');
+            const total = successCount + errorCount;
+            results.innerHTML = `
+                <strong>Progreso:</strong> ${total}/${totalImages} imágenes procesadas<br>
+                <span style="color: green;">✅ Éxito: ${successCount}</span><br>
+                <span style="color: red;">❌ Errores: ${errorCount}</span>
+                ${total === totalImages ? '<br><br><strong>Test completado!</strong>' : ''}
+            `;
+        }
+
+        // Timeout para marcar errores si las imágenes no cargan en 10 segundos
+        setTimeout(() => {
+            if (successCount + errorCount < totalImages) {
+                console.warn('Algunas imágenes no cargaron en 10 segundos');
+            }
+        }, 10000);
+    </script>
+</body>
+</html> 

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Imágenes</title>
+    <style>
+        body { background: #111; color: white; font-family: Arial; }
+        img { width: 200px; height: 150px; object-fit: contain; border: 1px solid #555; margin: 10px; }
+        .success { border-color: green; }
+        .error { border-color: red; }
+    </style>
+</head>
+<body>
+    <h1>Test de Imágenes</h1>
+    
+    <div>
+        <h3>Capibara 1B</h3>
+        <img src="/images/Capibara1Bb.webp" onload="this.className='success'" onerror="this.className='error'">
+        <p>/images/Capibara1Bb.webp</p>
+    </div>
+    
+    <div>
+        <h3>Capibara 3B</h3>
+        <img src="/images/Capibara3Bn.webp" onload="this.className='success'" onerror="this.className='error'">
+        <p>/images/Capibara3Bn.webp</p>
+    </div>
+    
+    <div>
+        <h3>Multimodal</h3>
+        <img src="/images/multimodal1.webp" onload="this.className='success'" onerror="this.className='error'">
+        <p>/images/multimodal1.webp</p>
+    </div>
+    
+    <div>
+        <h3>Safe</h3>
+        <img src="/images/Safe1.webp" onload="this.className='success'" onerror="this.className='error'">
+        <p>/images/Safe1.webp</p>
+    </div>
+
+    <script>
+        console.log('Test página cargada');
+        setTimeout(() => {
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                if (!img.className) {
+                    console.error('Imagen no cargó:', img.src);
+                }
+            });
+        }, 3000);
+    </script>
+</body>
+</html> 
