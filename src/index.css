@@ -1,0 +1,1031 @@
+/* Preload critical fonts */
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/spacegrotesk/v15/V8mQQoyeyHLh4vXHMGXSAoCzr30_ieTkuqM.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/spacegrotesk/v15/V8mQQoyeyHLh4vXHMGXSAoCzr30_ieTkuqM.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('https://fonts.gstatic.com/s/spacegrotesk/v15/V8mQQoyeyHLh4vXHMGXSAoCzr30_ieTkuqM.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CSS Custom Properties for better performance */
+:root {
+  --color-primary: #7c3aed;
+  --color-primary-hover: #6d28d9;
+  --color-secondary: #1e1b4b;
+  --color-background: #000000;
+  --color-surface: #1a1a1a;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #d1d5db;
+  --color-text-muted: #9ca3af;
+  --color-border: rgba(139, 92, 246, 0.2);
+  
+  --font-family-primary: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  
+  --shadow-glow: 0 8px 30px rgba(0, 255, 0, 0.2);
+  --shadow-glow-hover: 0 8px 30px rgba(0, 255, 0, 0.4);
+  
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Base styles with performance optimizations */
+html {
+  font-family: var(--font-family-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-smooth: always;
+  font-size: 15px;
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  font-weight: 300;
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Typography improvements */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 300;
+  line-height: 1.2;
+  margin: 0;
+}
+
+/* Selection styling */
+::selection {
+  background: var(--color-primary);
+  color: white;
+}
+
+::-moz-selection {
+  background: var(--color-primary);
+  color: white;
+}
+
+/* Utility classes */
+.bg-gradient-purple {
+  background: linear-gradient(135deg, #2D1B69 0%, #120B2E 80%);
+}
+
+.text-gradient {
+  background: linear-gradient(to right, #9F7AEA, #667EEA);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Performance optimizations */
+.gpu-accelerated {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Image optimizations */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Lazy loading enhancement */
+img[loading="lazy"] {
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+}
+
+img[loading="lazy"].loaded {
+  opacity: 1;
+}
+
+/* Focus management */
+.focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Loading states */
+.loading-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--color-surface) 25%,
+    rgba(255, 255, 255, 0.1) 50%,
+    var(--color-surface) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Smooth scrolling for containers */
+.smooth-scroll {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Hide scrollbar but keep functionality */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* High DPI display optimizations */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: optimize-contrast;
+  }
+}
+
+/* Dark mode optimizations */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  * {
+    color: black !important;
+    background: white !important;
+  }
+  
+  a {
+    text-decoration: underline;
+  }
+  
+  a[href^="http"]:after {
+    content: " (" attr(href) ")";
+  }
+}
+
+/* Container queries support when available */
+@supports (container-type: inline-size) {
+  .container-query {
+    container-type: inline-size;
+  }
+}
+
+/* Modern CSS features */
+@supports (backdrop-filter: blur(10px)) {
+  .backdrop-blur-fallback {
+    backdrop-filter: blur(10px);
+  }
+}
+
+@supports not (backdrop-filter: blur(10px)) {
+  .backdrop-blur-fallback {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-hover);
+}
+
+/* Optimized transitions */
+.transition-optimized {
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
+}
+
+.transition-optimized:hover {
+  transform: translateY(-2px);
+}
+
+/* Critical CSS for above-the-fold content */
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  backdrop-filter: blur(10px);
+  background-color: rgba(0, 0, 0, 0.5);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Red neuronal biológica animada */
+.neural-network {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* Nodos neuronales */
+.neuron {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #a855f7 0%, #7c3aed 70%, transparent 100%);
+  box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+  animation: neuronPulse 3s ease-in-out infinite;
+}
+
+.neuron-1 { top: 10%; left: 15%; animation-delay: 0s; }
+.neuron-2 { top: 25%; left: 75%; animation-delay: 0.5s; }
+.neuron-3 { top: 45%; left: 20%; animation-delay: 1s; }
+.neuron-4 { top: 60%; left: 80%; animation-delay: 1.5s; }
+.neuron-5 { top: 80%; left: 30%; animation-delay: 2s; }
+.neuron-6 { top: 90%; left: 70%; animation-delay: 2.5s; }
+
+/* Conexiones sinápticas */
+.synapse {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, #a855f7 50%, transparent 100%);
+  opacity: 0.4;
+  animation: synapseFlow 4s ease-in-out infinite;
+}
+
+.synapse-1 {
+  top: 18%;
+  left: 18%;
+  width: 55%;
+  transform: rotate(15deg);
+  animation-delay: 0.2s;
+}
+
+.synapse-2 {
+  top: 52%;
+  left: 25%;
+  width: 50%;
+  transform: rotate(-20deg);
+  animation-delay: 0.8s;
+}
+
+.synapse-3 {
+  top: 35%;
+  left: 20%;
+  width: 35%;
+  transform: rotate(45deg);
+  animation-delay: 1.2s;
+}
+
+.synapse-4 {
+  top: 75%;
+  left: 35%;
+  width: 40%;
+  transform: rotate(-10deg);
+  animation-delay: 1.8s;
+}
+
+.synapse-5 {
+  top: 68%;
+  left: 15%;
+  width: 60%;
+  transform: rotate(25deg);
+  animation-delay: 2.4s;
+}
+
+/* Impulsos nerviosos */
+.impulse {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #06d6a0 0%, #1de9b6 100%);
+  box-shadow: 0 0 10px rgba(6, 214, 160, 0.8);
+  animation: impulseTravel 3s linear infinite;
+}
+
+.impulse-1 {
+  top: 17%;
+  left: 18%;
+  animation-delay: 0.5s;
+}
+
+.impulse-2 {
+  top: 51%;
+  left: 25%;
+  animation-delay: 1.5s;
+}
+
+.impulse-3 {
+  top: 74%;
+  left: 35%;
+  animation-delay: 2.5s;
+}
+
+/* Animaciones */
+@keyframes neuronPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.6;
+    box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+  }
+  50% {
+    transform: scale(1.4);
+    opacity: 1;
+    box-shadow: 0 0 25px rgba(168, 85, 247, 0.6);
+  }
+}
+
+@keyframes synapseFlow {
+  0%, 100% {
+    opacity: 0.2;
+    box-shadow: none;
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 8px rgba(168, 85, 247, 0.4);
+  }
+}
+
+@keyframes impulseTravel {
+  0% {
+    transform: translateX(0) scale(0.5);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  90% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    transform: translateX(200px) scale(0.5);
+    opacity: 0;
+  }
+}
+
+/* Efectos adicionales para pantallas más grandes */
+@media (min-width: 768px) {
+  .neuron {
+    width: 10px;
+    height: 10px;
+  }
+  
+  .impulse {
+    width: 5px;
+    height: 5px;
+  }
+  
+  .synapse {
+    height: 1.5px;
+  }
+}
+
+/* Nodos interactivos del modelo Capibara */
+.interactive-node {
+  width: 14px !important;
+  height: 14px !important;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+  position: relative;
+}
+
+.interactive-node:hover {
+  transform: scale(1.8);
+  z-index: 50;
+}
+
+.interactive-node .neuron-glow {
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.interactive-node:hover .neuron-glow {
+  opacity: 0.6;
+  animation: glowPulse 2s ease-in-out infinite;
+}
+
+/* Colores específicos para cada tipo de nodo */
+.neuron-1.interactive-node .neuron-glow {
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.4) 0%, transparent 70%);
+}
+
+.neuron-2.interactive-node .neuron-glow {
+  background: radial-gradient(circle, rgba(20, 184, 166, 0.4) 0%, transparent 70%);
+}
+
+.neuron-3.interactive-node .neuron-glow {
+  background: radial-gradient(circle, rgba(249, 115, 22, 0.4) 0%, transparent 70%);
+}
+
+.neuron-4.interactive-node .neuron-glow {
+  background: radial-gradient(circle, rgba(239, 68, 68, 0.4) 0%, transparent 70%);
+}
+
+.neuron-5.interactive-node .neuron-glow {
+  background: radial-gradient(circle, rgba(34, 197, 94, 0.4) 0%, transparent 70%);
+}
+
+.neuron-6.interactive-node .neuron-glow {
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, transparent 70%);
+}
+
+/* Conexiones sinápticas adicionales */
+.synapse-6 {
+  top: 38%;
+  left: 60%;
+  width: 25%;
+  transform: rotate(-45deg);
+  animation-delay: 0.4s;
+}
+
+.synapse-7 {
+  top: 15%;
+  left: 50%;
+  width: 30%;
+  transform: rotate(60deg);
+  animation-delay: 1.6s;
+}
+
+/* Impulso nervioso adicional */
+.impulse-4 {
+  top: 37%;
+  left: 60%;
+  animation-delay: 3.0s;
+}
+
+/* Animación de brillo para nodos interactivos */
+@keyframes glowPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.8;
+  }
+}
+
+/* Mejorar la visibilidad de tooltips en dispositivos móviles */
+@media (max-width: 767px) {
+  .interactive-node {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  
+  .interactive-node:hover {
+    transform: scale(2.2);
+  }
+}
+
+/* Asegurar que los tooltips estén por encima de todo */
+.interactive-node .group-hover\:opacity-100 {
+  z-index: 100;
+}
+
+/* Tooltips interactivos - estilos básicos */
+.interactive-node .group-hover\:opacity-100 {
+  z-index: 9999 !important;
+}
+
+/* Mejoras responsivas para tooltips */
+@media (max-width: 768px) {
+  .interactive-node .absolute div {
+    max-width: 240px;
+    padding: 10px 14px;
+  }
+  
+  .interactive-node .absolute h4 {
+    font-size: 0.875rem;
+  }
+  
+  .interactive-node .absolute p {
+    font-size: 0.75rem;
+  }
+}
+
+/* ========================================
+   NEUMORPHISM STYLES
+   ======================================== */
+
+/* Neumorphism Base - Light version (for light backgrounds) */
+.neumorphic {
+  background: #e0e0e0;
+  border-radius: 20px;
+  box-shadow: 
+    8px 8px 16px #bebebe,
+    -8px -8px 16px #ffffff;
+  transition: all 0.3s ease;
+}
+
+.neumorphic:hover {
+  box-shadow: 
+    6px 6px 12px #bebebe,
+    -6px -6px 12px #ffffff;
+  transform: translateY(-2px);
+}
+
+.neumorphic:active {
+  box-shadow: 
+    inset 4px 4px 8px #bebebe,
+    inset -4px -4px 8px #ffffff;
+}
+
+/* Neumorphism Inset (pressed in effect) */
+.neumorphic-inset {
+  background: #e0e0e0;
+  border-radius: 20px;
+  box-shadow: 
+    inset 8px 8px 16px #bebebe,
+    inset -8px -8px 16px #ffffff;
+}
+
+/* Neumorphism Dark - Adaptado para esquemas oscuros */
+.neumorphic-dark {
+  background: #1a1a1a;
+  border-radius: 20px;
+  box-shadow: 
+    8px 8px 16px rgba(0, 0, 0, 0.5),
+    -8px -8px 16px rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+}
+
+.neumorphic-dark:hover {
+  box-shadow: 
+    6px 6px 12px rgba(0, 0, 0, 0.6),
+    -6px -6px 12px rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+}
+
+.neumorphic-dark:active {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.7),
+    inset -4px -4px 8px rgba(255, 255, 255, 0.03);
+}
+
+/* Neumorphism Dark Inset */
+.neumorphic-dark-inset {
+  background: #1a1a1a;
+  border-radius: 20px;
+  box-shadow: 
+    inset 8px 8px 16px rgba(0, 0, 0, 0.5),
+    inset -8px -8px 16px rgba(255, 255, 255, 0.05);
+}
+
+/* Neumorphism Purple Theme - Para el tema actual */
+.neumorphic-purple {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d1b4d 100%);
+  border-radius: 20px;
+  box-shadow: 
+    8px 8px 16px rgba(0, 0, 0, 0.4),
+    -8px -8px 16px rgba(124, 58, 237, 0.1),
+    0 0 0 1px rgba(139, 92, 246, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.neumorphic-purple:hover {
+  box-shadow: 
+    10px 10px 20px rgba(0, 0, 0, 0.5),
+    -10px -10px 20px rgba(124, 58, 237, 0.15),
+    0 0 0 1px rgba(139, 92, 246, 0.2);
+  transform: translateY(-3px);
+}
+
+.neumorphic-purple:active {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.6),
+    inset -4px -4px 8px rgba(124, 58, 237, 0.05);
+  transform: translateY(0);
+}
+
+/* Neumorphism Button */
+.btn-neumorphic {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d1b4d 100%);
+  border: none;
+  border-radius: 16px;
+  padding: 12px 24px;
+  color: #ffffff;
+  font-weight: 500;
+  box-shadow: 
+    6px 6px 12px rgba(0, 0, 0, 0.4),
+    -6px -6px 12px rgba(124, 58, 237, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-neumorphic:hover {
+  box-shadow: 
+    4px 4px 8px rgba(0, 0, 0, 0.5),
+    -4px -4px 8px rgba(124, 58, 237, 0.15);
+  transform: translateY(-2px);
+}
+
+.btn-neumorphic:active {
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.6),
+    inset -3px -3px 6px rgba(124, 58, 237, 0.05);
+  transform: translateY(0);
+}
+
+/* Neumorphism Input */
+.input-neumorphic {
+  background: rgba(26, 26, 26, 0.8);
+  border: none;
+  border-radius: 16px;
+  padding: 12px 16px;
+  color: #ffffff;
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.5),
+    inset -4px -4px 8px rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.input-neumorphic:focus {
+  box-shadow: 
+    inset 4px 4px 8px rgba(0, 0, 0, 0.5),
+    inset -4px -4px 8px rgba(124, 58, 237, 0.15),
+    0 0 0 2px rgba(124, 58, 237, 0.3);
+}
+
+.input-neumorphic::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Neumorphism Card */
+.card-neumorphic {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d1b4d 100%);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 
+    10px 10px 20px rgba(0, 0, 0, 0.4),
+    -10px -10px 20px rgba(124, 58, 237, 0.1),
+    0 0 0 1px rgba(139, 92, 246, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-neumorphic:hover {
+  box-shadow: 
+    12px 12px 24px rgba(0, 0, 0, 0.5),
+    -12px -12px 24px rgba(124, 58, 237, 0.15),
+    0 0 0 1px rgba(139, 92, 246, 0.2);
+  transform: translateY(-4px);
+}
+
+/* Neumorphism Navigation */
+.nav-neumorphic {
+  background: rgba(26, 26, 26, 0.9);
+  backdrop-filter: blur(10px);
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    0 -2px 4px rgba(124, 58, 237, 0.05);
+}
+
+/* Neumorphism Icon Button */
+.icon-btn-neumorphic {
+  background: rgba(26, 26, 26, 0.8);
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 
+    4px 4px 8px rgba(0, 0, 0, 0.4),
+    -4px -4px 8px rgba(124, 58, 237, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.icon-btn-neumorphic:hover {
+  box-shadow: 
+    3px 3px 6px rgba(0, 0, 0, 0.5),
+    -3px -3px 6px rgba(124, 58, 237, 0.15);
+  transform: translateY(-2px);
+}
+
+.icon-btn-neumorphic:active {
+  box-shadow: 
+    inset 2px 2px 4px rgba(0, 0, 0, 0.6),
+    inset -2px -2px 4px rgba(124, 58, 237, 0.05);
+  transform: translateY(0);
+}
+
+/* Neumorphism Badge */
+.badge-neumorphic {
+  background: rgba(26, 26, 26, 0.9);
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-size: 0.875rem;
+  box-shadow: 
+    3px 3px 6px rgba(0, 0, 0, 0.4),
+    -3px -3px 6px rgba(124, 58, 237, 0.1);
+}
+
+/* Neumorphism Link (para navegación) */
+.nav-link-neumorphic {
+  background: rgba(26, 26, 26, 0.6);
+  border: none;
+  border-radius: 12px;
+  padding: 8px 16px;
+  color: #ffffff;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: 
+    3px 3px 6px rgba(0, 0, 0, 0.3),
+    -3px -3px 6px rgba(124, 58, 237, 0.08);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-link-neumorphic::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.nav-link-neumorphic:hover {
+  box-shadow: 
+    2px 2px 4px rgba(0, 0, 0, 0.4),
+    -2px -2px 4px rgba(124, 58, 237, 0.12);
+  transform: translateY(-2px);
+  color: #a78bfa;
+}
+
+.nav-link-neumorphic:hover::before {
+  left: 100%;
+}
+
+.nav-link-neumorphic:active {
+  box-shadow: 
+    inset 2px 2px 4px rgba(0, 0, 0, 0.5),
+    inset -2px -2px 4px rgba(124, 58, 237, 0.05);
+  transform: translateY(0);
+}
+
+/* Neumorphism Label */
+.label-neumorphic {
+  display: block;
+  padding: 8px 12px;
+  background: rgba(26, 26, 26, 0.6);
+  border-radius: 10px;
+  color: #a78bfa;
+  font-weight: 500;
+  font-size: 0.875rem;
+  margin-bottom: 8px;
+  box-shadow: 
+    inset 2px 2px 4px rgba(0, 0, 0, 0.4),
+    inset -2px -2px 4px rgba(124, 58, 237, 0.08);
+  transition: all 0.3s ease;
+}
+
+.label-neumorphic:hover {
+  box-shadow: 
+    inset 2px 2px 4px rgba(0, 0, 0, 0.4),
+    inset -2px -2px 4px rgba(124, 58, 237, 0.12);
+  color: #c4b5fd;
+}
+
+/* Neumorphism Alert/Message */
+.alert-neumorphic-success {
+  background: rgba(16, 185, 129, 0.15);
+  border-radius: 16px;
+  padding: 16px;
+  color: #10b981;
+  box-shadow: 
+    4px 4px 8px rgba(0, 0, 0, 0.3),
+    -4px -4px 8px rgba(16, 185, 129, 0.1),
+    inset 2px 2px 4px rgba(16, 185, 129, 0.05);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.alert-neumorphic-error {
+  background: rgba(239, 68, 68, 0.15);
+  border-radius: 16px;
+  padding: 16px;
+  color: #ef4444;
+  box-shadow: 
+    4px 4px 8px rgba(0, 0, 0, 0.3),
+    -4px -4px 8px rgba(239, 68, 68, 0.1),
+    inset 2px 2px 4px rgba(239, 68, 68, 0.05);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.alert-neumorphic-info {
+  background: rgba(59, 130, 246, 0.15);
+  border-radius: 16px;
+  padding: 16px;
+  color: #3b82f6;
+  box-shadow: 
+    4px 4px 8px rgba(0, 0, 0, 0.3),
+    -4px -4px 8px rgba(59, 130, 246, 0.1),
+    inset 2px 2px 4px rgba(59, 130, 246, 0.05);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+}
+
+/* Neumorphism Mobile Menu */
+.mobile-menu-neumorphic {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d1b4d 100%);
+  box-shadow: 
+    inset 0 0 50px rgba(0, 0, 0, 0.5),
+    -20px -20px 40px rgba(124, 58, 237, 0.1);
+}
+
+.mobile-menu-link-neumorphic {
+  background: rgba(26, 26, 26, 0.8);
+  border-radius: 16px;
+  padding: 16px 24px;
+  color: #ffffff;
+  text-decoration: none;
+  display: block;
+  box-shadow: 
+    4px 4px 8px rgba(0, 0, 0, 0.4),
+    -4px -4px 8px rgba(124, 58, 237, 0.1);
+  transition: all 0.3s ease;
+  margin: 8px 0;
+}
+
+.mobile-menu-link-neumorphic:hover {
+  box-shadow: 
+    3px 3px 6px rgba(0, 0, 0, 0.5),
+    -3px -3px 6px rgba(124, 58, 237, 0.15);
+  transform: translateY(-3px);
+  color: #a78bfa;
+}
+
+.mobile-menu-link-neumorphic:active {
+  box-shadow: 
+    inset 3px 3px 6px rgba(0, 0, 0, 0.6),
+    inset -3px -3px 6px rgba(124, 58, 237, 0.05);
+  transform: translateY(0);
+}
+
+/* Neumorphism Form Group */
+.form-group-neumorphic {
+  background: rgba(26, 26, 26, 0.6);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 
+    4px 4px 8px rgba(0, 0, 0, 0.3),
+    -4px -4px 8px rgba(124, 58, 237, 0.08);
+  transition: all 0.3s ease;
+}
+
+.form-group-neumorphic:focus-within {
+  box-shadow: 
+    6px 6px 12px rgba(0, 0, 0, 0.4),
+    -6px -6px 12px rgba(124, 58, 237, 0.12);
+  transform: translateY(-2px);
+}
+
+/* Neumorphism Divider */
+.divider-neumorphic {
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(124, 58, 237, 0.3) 50%, 
+    transparent 100%
+  );
+  box-shadow: 
+    0 2px 4px rgba(0, 0, 0, 0.2),
+    0 -2px 4px rgba(124, 58, 237, 0.1);
+  margin: 24px 0;
+}
+
+/* Neumorphism Logo Container */
+.logo-container-neumorphic {
+  background: rgba(26, 26, 26, 0.5);
+  border-radius: 12px;
+  padding: 8px;
+  display: inline-block;
+  box-shadow: 
+    3px 3px 6px rgba(0, 0, 0, 0.3),
+    -3px -3px 6px rgba(124, 58, 237, 0.08);
+  transition: all 0.3s ease;
+}
+
+.logo-container-neumorphic:hover {
+  box-shadow: 
+    4px 4px 8px rgba(0, 0, 0, 0.4),
+    -4px -4px 8px rgba(124, 58, 237, 0.12);
+  transform: translateY(-2px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .neumorphic-purple,
+  .card-neumorphic {
+    border-radius: 16px;
+  }
+  
+  .btn-neumorphic {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+  
+  .nav-link-neumorphic {
+    padding: 6px 12px;
+    font-size: 0.875rem;
+  }
+  
+  .mobile-menu-link-neumorphic {
+    padding: 14px 20px;
+    font-size: 1.25rem;
+  }
+}
